@@ -2,49 +2,49 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
 
 /**
  * Created by HP-PC on 08/07/2016.
  */
 
 /**
- * Read csv files
+ * Read txt files
  */
-public class ReadCSV extends Reader {
+public class ReadTxt extends Reader {
 
     /**
-     * Name of the csv file
+     * Name of the txt file
      */
     private String filename;
 
-    public ReadCSV(String filename) {
+    public ReadTxt(String filename) {
         this.filename = filename;
     }
 
     /**
-     * Start to fill a strings array reading a csv file,
+     * Start to fill a strings array reading a txt file,
      * Each line represents an string array,
-     * Each position of the array has the value of one attribute of the line.
+     * Position 0 of the array has the value of one line.
      *
      * @return The array created
      */
     @Override
     public ArrayList<String[]> read() {
         {
-            ArrayList<String[]> csvData = new ArrayList<String[]>();
+            ArrayList<String[]> txtData = new ArrayList<String[]>();
 
             BufferedReader br = null;
             String line;
-            String cvsSplitBy = ",";
             try {
 
                 br = new BufferedReader(new FileReader(path + filename));
                 while ((line = br.readLine()) != null) {
 
                     // use comma as separator
-                    String[] data = line.split(cvsSplitBy);
-                    csvData.add(data);
+                    String[] element = new String[1];
+                    element[0] = line;
+                    txtData.add(element);
 
                 }
 
@@ -54,8 +54,10 @@ public class ReadCSV extends Reader {
                 e.printStackTrace();
             } finally {
                 closeReader(br);
-                return csvData;
+                return txtData;
             }
         }
     }
+
 }
+
