@@ -7,7 +7,7 @@ public abstract class Reader {
     /**
      * Location of all the files that
      */
-    String path = "C:\\Users\\HP-PC\\IdeaProjects\\JaEdi\\src\\Module\\";
+    String path = "src\\Module\\";
 
     /**
      * Method to be implemented in the child classes

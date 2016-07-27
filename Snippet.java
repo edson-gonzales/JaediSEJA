@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -20,8 +21,9 @@ public class Snippet {
      * @return if the snippet is found return the complete word
      * if not return empty
      */
-    public String obtainSnippet(String snippet) {
-        reader = new ReadCSV("snippets.csv");
+    public String obtainSnippet(String snippet) throws IOException {
+        Configuration configuration= new Configuration();
+        reader = new ReadCSV(configuration.getSnippetsFile());
         ArrayList<String[]> snippetsList;
         snippetsList = reader.read();
         String newSnippet = snippet.replaceAll("\\s", "");

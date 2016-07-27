@@ -1,14 +1,15 @@
-import com.sun.javafx.css.Style;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Menu;
-import java.awt.MenuBar;
+
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.IOException;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
 
 import javax.swing.*;
 import javax.swing.text.*;
+import javax.swing.tree.DefaultMutableTreeNode;
 
 
 public class Window extends JFrame implements KeyListener {
@@ -37,8 +38,32 @@ public class Window extends JFrame implements KeyListener {
         tabbedPane.addTab("Coding 3", panel3);
     }
 
-    public void createTreeEast(){
-        treeEast=new JTree();
+    public void createTreeEast() throws ClassNotFoundException {
+
+        ClassParser classParser=new ClassParser("Window");
+        ArrayList<Member> methodsNames=classParser.getMethods();
+        ArrayList<Member> fieldsNames=classParser.getFields();
+
+
+        DefaultMutableTreeNode principalNode=new DefaultMutableTreeNode("Window");
+        DefaultMutableTreeNode methodsNode=new DefaultMutableTreeNode("Methods");
+        DefaultMutableTreeNode fieldsNode=new DefaultMutableTreeNode("Fields");
+
+        for (Member methodName: methodsNames){
+            DefaultMutableTreeNode methodNode=new DefaultMutableTreeNode(methodName.toString());
+            methodsNode.add(methodNode);
+        }
+
+        for (Member fieldName: fieldsNames){
+            DefaultMutableTreeNode fieldNode=new DefaultMutableTreeNode(fieldName.toString());
+            fieldsNode.add(fieldNode);
+        }
+
+        principalNode.add(methodsNode);
+        principalNode.add(fieldsNode);
+        treeEast=new JTree(principalNode);
+        treeEast.setMinimumSize(new Dimension(250,getHeight()));
+
     }
 
     public void createTreeWest(){
@@ -47,6 +72,7 @@ public class Window extends JFrame implements KeyListener {
 
     public void createEditor(){
         editor=new JTextPane();
+        editor.setMinimumSize(new Dimension(panel1.getWidth(),panel1.getHeight()));
         editor.addKeyListener(this);
     }
 
@@ -155,7 +181,7 @@ public class Window extends JFrame implements KeyListener {
         panelWest.add(treeWest);
     }
 
-    public void createPanelEast(){
+    public void createPanelEast() throws ClassNotFoundException {
         panelEast=new JPanel();
         panelEast.setLayout(new BoxLayout(panelEast,BoxLayout.Y_AXIS));
         createTreeEast();
@@ -177,19 +203,27 @@ public class Window extends JFrame implements KeyListener {
         panelCenter.setLayout(new BoxLayout(panelCenter,BoxLayout.Y_AXIS));
         createTabbedPane();
         createEditor();
+        editor.setMinimumSize(new Dimension(600,600));
         panel1.add(editor);
+        editor.setText("pPublic class Dog{\n" +
+                "private String name;\n" +
+                "private int age;\n" +
+                "public void Eat(){\n" +
+                "name=\"hello\";}\n" +
+                "}");
         panelCenter.add(tabbedPane);
     }
 
-    public Window(){
+    public Window() throws ClassNotFoundException {
         setTitle("Principal");
         setBackground(Color.gray);
         setLayout(new BorderLayout());
         createPanelNorth();
         createPanelWest();
+        createPanelCenter();
         createPanelEast();
         createPanelSouth();
-        createPanelCenter();
+
 
         add(panelNorth,BorderLayout.NORTH);
         add(panelWest,BorderLayout.WEST);
@@ -197,7 +231,7 @@ public class Window extends JFrame implements KeyListener {
         add(panelSouth,BorderLayout.SOUTH);
         add(panelCenter,BorderLayout.CENTER);
 
-        setSize(600,600);
+        setSize(800,800);
     }
 
     @Override
@@ -215,7 +249,12 @@ public class Window extends JFrame implements KeyListener {
                 String lastWord=text.substring(text.lastIndexOf(" "));
                 Snippet snippet=new Snippet();
 
-                String newWord=snippet.obtainSnippet(lastWord);
+                String newWord= null;
+                try {
+                    newWord = snippet.obtainSnippet(lastWord);
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
                 if(newWord!=""){text.replaceAll("^\\s*","");text.replaceAll("\\s*$","");}
 
                 editor.setText(text.substring(0,text.lastIndexOf(" "))+" "+newWord+" ");
@@ -225,7 +264,11 @@ public class Window extends JFrame implements KeyListener {
         }
         else if(e.VK_SPACE==e.getKeyCode()){
             tabCount=0;
-            ReconizeSpace();
+            try {
+                ReconizeSpace();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
         }
         else{
             tabCount=0;
@@ -233,7 +276,7 @@ public class Window extends JFrame implements KeyListener {
 
     }
 
-    private void ReconizeSpace() {
+    private void ReconizeSpace() throws IOException {
         RemarkWord remarkWord=new RemarkWord();
         String text=new String(" "+editor.getText());
         String lastWord=text.substring(text.lastIndexOf(" ")).replaceAll("\\s","");
