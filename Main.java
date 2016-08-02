@@ -3,14 +3,14 @@
  */
 
 public class Main {
-    public static void main(String []Args){
-        Window window=new Window();
+    /**
+     * initial the app
+     *
+     * @param Args
+     * @throws ClassNotFoundException
+     */
+    public static void main(String[] Args) throws ClassNotFoundException {
+        Window window = new Window();
         window.setVisible(true);
-        //proof methods and attributes
-        Reflection test = new Reflection();
-        test.getPrivateAttributes("Window");
-        test.getPublicAttributes("Window");
-        test.getPrivateMethods("Window");
-        test.getPublicMethods("Window");
     }
 }

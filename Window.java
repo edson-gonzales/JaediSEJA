@@ -2,10 +2,10 @@
  * Created by Ericka-VS on 10/07/2016.
  */
 
-import java.awt.BorderLayout;
-import java.awt.Color;
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.IOException;
 
 import javax.swing.*;
 import javax.swing.text.*;
@@ -22,15 +22,21 @@ public class Window extends JFrame implements KeyListener {
     public void createTabbedPane() {
         tabbedPane = new JTabbedPane();
         panel1 = new JPanel();
-        tabbedPane.addTab("Coding 1", panel1);
+        tabbedPane.addTab("first", panel1);
     }
 
+    /**
+     * creation of editor principal
+     */
     public void createEditor() {
         editor = new JTextPane();
         editor.addKeyListener(this);
+        editor.setSize(500, 500);
     }
 
-    //principal window to edition
+    /**
+     * creation center panel
+     */
     public void createPanelCenter() {
         panelCenter = new JPanel();
         panelCenter.setLayout(new BoxLayout(panelCenter, BoxLayout.Y_AXIS));
@@ -38,10 +44,11 @@ public class Window extends JFrame implements KeyListener {
         createEditor();
         panel1.add(editor);
         panelCenter.add(tabbedPane);
-
     }
 
-    //principal window with components
+    /**
+     * Constructor of principal window
+     */
     public Window() {
         setTitle("JaEdi");
         setBackground(Color.white);
@@ -51,52 +58,69 @@ public class Window extends JFrame implements KeyListener {
         setSize(600, 600);
     }
 
-
+    /**
+     * the KeyPressed is override, and work with the
+     * VK_PERIOD and VK_SPACE
+     *
+     * @param e
+     */
     @Override
     public void keyPressed(KeyEvent e) {
         if (e.VK_PERIOD == e.getKeyCode()) {
-            tabCount = 0;
-            RecognizeClass();
+            System.out.println("Key Period recognized");
+            try {
+                Reflection test = new Reflection("RemarkWord");
+                new MethodsAndFields(test);
+            } catch (ClassNotFoundException e1) {
+                e1.printStackTrace();
             }
-        else if(e.VK_SPACE==e.getKeyCode()) {
-             tabCount = 0;
-             RecognizeSpace();
+
+        } else if (e.VK_SPACE == e.getKeyCode()) {
+            tabCount = 0;
+            try {
+                RecognizeSpace();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
         } else {
-             tabCount = 0;
+            tabCount = 0;
         }
     }
 
-    //method to recognize the space after a word inserted
-    private void RecognizeSpace() {
+    /**
+     * work on recognize the space event and colouring if the word match.
+     *
+     * @throws IOException
+     */
+    private void RecognizeSpace() throws IOException {
 
-        RemarkWord remarkWord=new RemarkWord();
-        String textInserted=new String(" "+editor.getText());
+        RemarkWord remarkWord = new RemarkWord();
+        String textInserted = new String(" " + editor.getText());
         String lastWord = textInserted.substring(textInserted.lastIndexOf(" ")).replaceAll("\\s", "");
 
-        if(remarkWord.isReservedWord(lastWord)) {
+        if (remarkWord.isReservedWord(lastWord)) {
             StyleContext sc = StyleContext.getDefaultStyleContext();
-            AttributeSet atribSet = sc.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Foreground, Color.blue);
+            AttributeSet atriSet = sc.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Foreground, Color.blue);
 
             int len = editor.getDocument().getLength();
             editor.setCaretPosition(len);
             editor.setText(textInserted.substring(0, textInserted.lastIndexOf(" ")));
-            editor.setCharacterAttributes(atribSet, false);
+            editor.setCharacterAttributes(atriSet, false);
             editor.replaceSelection(lastWord);
-            atribSet = sc.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Foreground, Color.black);
-            editor.setCharacterAttributes(atribSet, true);
+            atriSet = sc.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Foreground, Color.black);
+            editor.setCharacterAttributes(atriSet, true);
         }
     }
 
-    private void RecognizeClass(){
-
-    }
 
     @Override
     public void keyTyped(KeyEvent e) {
     }
+
     @Override
     public void keyReleased(KeyEvent e) {
 
     }
 }
+
 
