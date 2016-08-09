@@ -1,3 +1,5 @@
+package Classes;
+
 import javax.swing.*;
 
 /**
@@ -10,7 +12,7 @@ public class PanelSouth {
     private JEditorPane output;
     private JLabel labelOutPut;
 
-    private int tabCount=0;
+    //private int tabCount=0;
 
     public void createPanelSouth(){
         panelSouth=new JPanel();
