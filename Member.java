@@ -1,20 +1,26 @@
+package Classes.JavaDocsST;
+
 import java.lang.reflect.Modifier;
 
 /**
  * Created by HP-PC on 26/07/2016.
  */
 public class Member {
-    protected String name;
+    private String name;
     private int accessModifier;
     private String type;
     private String dataType;
 
+    public String getName(){
+        return this.name;
+    }
     /**
-     * Constructor method
-     * @param name
-     * @param accessModifier
-     * @param type
-     * @param dataType
+     * Constructor method, a member can be a method, field or parameter.
+     * @param name -> The name of the member
+     * @param accessModifier -> Could be public, private, etc.
+     * @param type -> Is the data type that has a field or parameter.
+     * @param dataType -> Is the type of member. It could be a method, field
+     *                 or parameter.
      */
     public Member(String name, int accessModifier, String type, String dataType) {
 

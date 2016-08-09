@@ -1,3 +1,5 @@
+package Classes;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -13,7 +15,7 @@ public class Configuration {
     /**
      * Constructor that prepares all the values to start reading
      * the configuration file called config.properties
-     * @throws IOException
+     * @throws IOException -> When the file doesn't exist
      */
     public Configuration() throws IOException {
         String configurationFile = "resources\\config.properties";
@@ -46,5 +48,16 @@ public class Configuration {
 
         String reservedWordsFileName = properties.getProperty("reservedWords");
         return reservedWordsFileName;
+    }
+
+    /**
+     * Get the name of the file where the javadocs in alphabetic order
+     * are stored from the configuration file.
+     * @return The file name
+     */
+    public String getFileByLetterToFindJavaDocs(String letter){
+
+        String javaDocListFileName = properties.getProperty(letter);
+        return javaDocListFileName;
     }
 }

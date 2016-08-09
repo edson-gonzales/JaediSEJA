@@ -1,3 +1,8 @@
+package Classes.JavaDocsST;
+
+import Classes.Configuration;
+import Classes.Reader;
+
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -6,7 +11,7 @@ import java.util.ArrayList;
  */
 
 /**
- * Snippet handler
+ * Classes.Snippet handler
  */
 public class Snippet {
     /**

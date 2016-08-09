@@ -1,4 +1,4 @@
-
+package Classes.JavaDocsST;
 
 /**
  * Created by HP-PC on 26/07/2016.
@@ -15,7 +15,8 @@ public enum MemberDataType {
      * Constructor of the enumerator that has
      * the text that reflects the type of the
      * member
-     * @param memberType
+     * @param memberType -> Is the type of member. It could be a method, field
+     *                 or parameter.
      */
     MemberDataType(String memberType) {
         this.memberType = memberType;

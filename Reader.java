@@ -1,3 +1,5 @@
+package Classes;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -5,20 +7,19 @@ import java.util.ArrayList;
 public abstract class Reader {
 
     /**
-     * Location of all the files that
+     * Global location of all the files
      */
-    String path = "src\\Module\\";
+    protected String path = "src\\Module\\";
+    protected String pathjava = "C:\\Program Files\\Java\\jdk1.8.0_65\\jdk-8u101-docs-all\\docs\\api\\index-files\\";
 
     /**
-     * Method to be implemented in the child classes
-     *
+     * Method to be implemented in the child classes.
      * @return Array with data per line read
      */
-    abstract ArrayList<String[]> read();
+    public abstract ArrayList<String[]> read();
 
     /**
-     * Finish the process of read some file
-     *
+     * Finish the process of read some file.
      * @param br => Th object used to read the files
      */
     public void closeReader(BufferedReader br) {

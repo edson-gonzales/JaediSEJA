@@ -1,8 +1,12 @@
+package Classes.JavaDocsST;
+
+import Classes.Reader;
+
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
 
 /**
  * Created by HP-PC on 08/07/2016.
@@ -13,9 +17,6 @@ import java.util.*;
  */
 public class ReadCSV extends Reader {
 
-    /**
-     * Name of the csv file
-     */
     private String filename;
 
     public ReadCSV(String filename) {
